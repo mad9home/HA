@@ -7,13 +7,16 @@ public class Main {
 
 	public static void main(String[] args) throws NotConnectedException {
 		DavidHome home = DavidHome.getInstance();
-		home.receive();
-//		System.out.println(home.receive());
-		
+		 home.receive();
+		// System.out.println(home.receive());
+
 		Arbeitszimmer az = new Arbeitszimmer();
-		az.update();
-		System.out.println(az.getTemperature());
-		az.setTemperature(20f);
-		System.out.println(az.getTemperature());
+		 az.update();
+		 System.out.println(az);
+		// System.out.println(az.getTemperature());
+//		az.setTemperature(20f);
+//		az.toggleLight1();
+		// System.out.println(az.getTemperature());
 	}
+
 }

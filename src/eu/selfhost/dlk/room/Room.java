@@ -8,5 +8,9 @@ public interface Room {
 
 	void setTemperature(float temperature) throws NotConnectedException;
 
+	void toggleLight1();
+
+	void toggleLight2();
+
 	void update() throws NotConnectedException;
 }

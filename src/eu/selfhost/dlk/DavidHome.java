@@ -3,7 +3,8 @@ package eu.selfhost.dlk;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 import eu.selfhost.dlk.exception.NotConnectedException;
 
@@ -18,9 +19,12 @@ public class DavidHome {
 	private static final int NUMBER_BOOLEANS = 960;
 
 	private static DavidHome davidHome;
-	private Packet lastPacket;
+	private Packet receivePacket;
+	private Packet sendPacket;
+	private long lastSentAt;
 
 	private DavidHome() {
+		sendPacket = createInitialPacket();
 	}
 
 	public static DavidHome getInstance() {
@@ -31,11 +35,12 @@ public class DavidHome {
 	}
 
 	public Packet receive() {
-		send(requestPacket());
-		return lastPacket;
+		send(sendPacket);
+		return receivePacket;
 	}
 
 	public void send(Packet p) {
+		throttle();
 		try (Socket socket = new Socket(HOST, PORT);
 				DataOutputStream request = new DataOutputStream(socket.getOutputStream());
 				DataInputStream response = new DataInputStream(socket.getInputStream())) {
@@ -46,57 +51,81 @@ public class DavidHome {
 			byte[] responseArray = new byte[NUMBER_SHORTS * 2 + NUMBER_FLOATS * 4 + NUMBER_BOOLEANS / 8];
 			response.read(responseArray);
 
-			lastPacket = new Packet(NUMBER_SHORTS, NUMBER_FLOATS, NUMBER_BOOLEANS, responseArray);
+			receivePacket = new Packet(NUMBER_SHORTS, NUMBER_FLOATS, NUMBER_BOOLEANS, responseArray);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private Packet requestPacket() {
-		return new Packet(Collections.nCopies(NUMBER_SHORTS, (short) 0), Collections.nCopies(NUMBER_FLOATS, 0f),
-				Collections.nCopies(NUMBER_BOOLEANS, false));
+	private void throttle() {
+		// only if necessary
+		if (System.currentTimeMillis() - lastSentAt < 50) {
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		lastSentAt = System.currentTimeMillis();
+	}
+
+	public Packet createInitialPacket() {
+		List<Short> initialShorts = new ArrayList<>();
+		for (int i = 0; i < NUMBER_SHORTS; i++) {
+			initialShorts.add((short) 0);
+		}
+
+		List<Float> initialFloats = new ArrayList<>();
+		for (int i = 0; i < NUMBER_FLOATS; i++) {
+			if (i < 9) {
+				initialFloats.add(i, 22.0f);
+			} else {
+				initialFloats.add(i, 0.0f);
+			}
+		}
+
+		List<Boolean> initialBooleans = new ArrayList<>();
+		for (int i = 0; i < NUMBER_BOOLEANS; i++) {
+			initialBooleans.add(false);
+		}
+
+		return new Packet(initialShorts, initialFloats, initialBooleans);
 	}
 
 	public short getShort(int index) throws NotConnectedException {
-		if (lastPacket == null) {
+		if (receivePacket == null) {
 			throw new NotConnectedException("no connection to PLC established");
 		}
-		return lastPacket.getShorts().get(index);
+		return receivePacket.getShorts().get(index);
 	}
 
-	public void setShort(int index, short value) throws NotConnectedException {
-		if (lastPacket == null) {
-			throw new NotConnectedException("no connection to PLC established");
-		}
-		lastPacket.setShort(index, value);
+	public void setShort(int index, short value) {
+		sendPacket.setShort(index, value);
+		send(sendPacket);
 	}
 
 	public float getFloat(int index) throws NotConnectedException {
-		if (lastPacket == null) {
+		if (receivePacket == null) {
 			throw new NotConnectedException("no connection to PLC established");
 		}
-		return lastPacket.getFloats().get(index);
+		return receivePacket.getFloats().get(index);
 	}
 
-	public void setFloat(int index, float value) throws NotConnectedException {
-		if (lastPacket == null) {
-			throw new NotConnectedException("no connection to PLC established");
-		}
-		lastPacket.setFloat(index, value);
+	public void setFloat(int index, float value) {
+		sendPacket.setFloat(index, value);
+		send(sendPacket);
 	}
 
 	public boolean getBoolean(int index) throws NotConnectedException {
-		if (lastPacket == null) {
+		if (receivePacket == null) {
 			throw new NotConnectedException("no connection to PLC established");
 		}
-		return lastPacket.getBooleans().get(index);
+		return receivePacket.getBooleans().get(index);
 	}
 
-	public void setBoolean(int index, boolean value) throws NotConnectedException {
-		if (lastPacket == null) {
-			throw new NotConnectedException("no connection to PLC established");
-		}
-		lastPacket.setBoolean(index, value);
+	public void setBoolean(int index, boolean value) {
+		sendPacket.setBoolean(index, value);
+		send(sendPacket);
 	}
 
 }
