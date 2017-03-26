@@ -1,22 +1,14 @@
 package eu.selfhost.dlk;
 
-import eu.selfhost.dlk.exception.NotConnectedException;
-import eu.selfhost.dlk.room.Arbeitszimmer;
+import eu.selfhost.dlk.room.Room;
 
 public class Main {
 
-	public static void main(String[] args) throws NotConnectedException {
-		DavidHome home = DavidHome.getInstance();
-		 home.receive();
-		// System.out.println(home.receive());
-
-		Arbeitszimmer az = new Arbeitszimmer();
-		 az.update();
-		 System.out.println(az);
-		// System.out.println(az.getTemperature());
-//		az.setTemperature(20f);
-//		az.toggleLight1();
-		// System.out.println(az.getTemperature());
+	public static void main(String[] args) {
+		DavidHome home = new DavidHome();
+		home.update();
+		Room arbeitsZimmer = home.getArbeitsZimmer();
+		System.out.println(arbeitsZimmer);
 	}
 
 }

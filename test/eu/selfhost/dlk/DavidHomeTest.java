@@ -28,7 +28,7 @@ public class DavidHomeTest {
 
 	@Test
 	public void testSetFloat() throws Exception {
-		DavidHome home = DavidHome.getInstance();
+		PLCConnector home = PLCConnector.getInstance();
 		home.receive();
 		home.setFloat(0, 0f);
 	}
