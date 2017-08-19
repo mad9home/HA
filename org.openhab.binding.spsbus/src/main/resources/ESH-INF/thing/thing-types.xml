@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="spsbus"
+						  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						  xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+						  xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+
+	<!-- Sample Thing Type -->
+	<thing-type id="spsbusthing">
+		<label>SPSBus Binding Thing</label>
+		<description>Sample thing for SPSBus Binding</description>
+
+		<channels>
+			<channel id="temperature" typeId="temperature-channel"/>
+			<channel id="switch" typeId="switch-channel"/>
+		</channels>
+	</thing-type>
+
+	<channel-type id="temperature-channel">
+		<item-type>Number</item-type>
+		<label>Read Temperature</label>
+		<description>Sample channel for SPSBus Binding</description>
+	</channel-type>
+	
+	<channel-type id="switch-channel">
+        <item-type>Switch</item-type>
+        <label>On/Off</label>
+        <description>Sample channel for SPSBus Binding</description>
+    </channel-type>
+
+</thing:thing-descriptions>
