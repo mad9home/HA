@@ -1,0 +1,9 @@
+Group gGF           "Ground Floor"  <groundfloor>
+
+Group GF_Kitchen    "Kitchen"       <kitchen>   (gGF)
+Group GF_Corridor   "Corridor"      <corridor>  (gGF)
+
+Group:Switch:OR(ON, OFF)        Lights      "All Lights [(%d)]"
+
+Switch SPSBusBindingThing_OnOff    "Schalter 1"       (GF_Corridor, Lights)
+Switch SPSBusBindingThing_OnOff    "Schalter 2"       (GF_Kitchen, Lights)

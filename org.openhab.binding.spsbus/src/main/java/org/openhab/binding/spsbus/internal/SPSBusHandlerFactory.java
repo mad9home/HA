@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = ThingHandlerFactory.class, immediate = true)
 public class SPSBusHandlerFactory extends BaseThingHandlerFactory {
 
-    private static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Collections.singleton(THING_TYPE_TEMPERATURE);
+    private static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Collections.singleton(THING_TYPE_UID);
 
     @Override
     public boolean supportsThingType(ThingTypeUID thingTypeUID) {
@@ -41,7 +41,7 @@ public class SPSBusHandlerFactory extends BaseThingHandlerFactory {
     protected ThingHandler createHandler(Thing thing) {
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
-        if (thingTypeUID.equals(THING_TYPE_TEMPERATURE)) {
+        if (thingTypeUID.equals(THING_TYPE_UID)) {
             return new SPSBusHandler(thing);
         }
 

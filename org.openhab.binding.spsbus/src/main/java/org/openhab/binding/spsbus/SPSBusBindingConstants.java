@@ -21,10 +21,13 @@ public class SPSBusBindingConstants {
     private static final String BINDING_ID = "spsbus";
 
     // List of all Thing Type UIDs
-    public static final ThingTypeUID THING_TYPE_TEMPERATURE = new ThingTypeUID(BINDING_ID, "spsbusthing");
+    public static final ThingTypeUID THING_TYPE_UID = new ThingTypeUID(BINDING_ID, "spsbusthing");
 
     // List of all Channel ids
-    public static final String TEMPERATURE = "temperature";
-    public static final String SWITCH = "switch";
+    public static final String CHANNEL_LIGHT = "switch_light";
+    public static final String CHANNEL_ROLLERSHUTTER = "rollershutter";
+    public static final String CHANNEL_TEMPERATURE = "sensor_temperature";
+    public static final String CHANNEL_THERMOSTAT = "thermostat_setpoint";
+    public static final String CHANNEL_OUTLET = "outlet";
 
 }

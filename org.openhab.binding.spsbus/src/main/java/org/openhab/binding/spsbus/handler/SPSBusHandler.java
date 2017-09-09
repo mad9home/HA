@@ -1,25 +1,22 @@
-/**
- * Copyright (c) 2010-2017 by the respective copyright holders.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- */
 package org.openhab.binding.spsbus.handler;
 
 import static org.openhab.binding.spsbus.SPSBusBindingConstants.*;
 
+import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.smarthome.core.items.Item;
 import org.eclipse.smarthome.core.library.types.DecimalType;
 import org.eclipse.smarthome.core.library.types.OnOffType;
+import org.eclipse.smarthome.core.thing.Channel;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingStatus;
+import org.eclipse.smarthome.core.thing.ThingStatusDetail;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
+import org.eclipse.smarthome.core.types.RefreshType;
 import org.eclipse.smarthome.core.types.State;
 import org.openhab.binding.spsbus.internal.PLCConnector;
 import org.openhab.binding.spsbus.internal.exception.NotConnectedException;
@@ -44,90 +41,96 @@ public class SPSBusHandler extends BaseThingHandler {
     }
 
     @Override
-    public void handleUpdate(ChannelUID channelUID, State newState) {
-        super.handleUpdate(channelUID, newState);
-        connector.receive();
-        if (channelUID.getId().equals(SWITCH)) {
-            try {
-                logger.info("connector.getBoolean(0) = " + connector.getBoolean(0));
-            } catch (NotConnectedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    @Override
-    public void handleCommand(ChannelUID channelUID, Command command) {
-        logger.info("handleCommand called");
-        connector.receive();
-        if (channelUID.getId().equals(TEMPERATURE)) {
-            try {
-                updateState(channelUID, new DecimalType(connector.getFloat(0)));
-            } catch (NotConnectedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            // try {
-            // updateState(channelUID, new DecimalType(connector.getFloat(0)));
-            // } catch (NotConnectedException e) {
-            // // TODO Auto-generated catch block
-            // e.printStackTrace();
-            // }
-            // TODO: handle command
-
-            // Note: if communication with thing fails for some reason,
-            // indicate that by setting the status with detail information
-            // updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR,
-            // "Could not control device at IP address x.x.x.x");
-        } else if (channelUID.getId().equals(SWITCH)) {
-            try {
-                logger.info("connector.getBoolean(0) = " + connector.getBoolean(0));
-                updateState(channelUID, connector.getBoolean(0) == true ? OnOffType.ON : OnOffType.OFF);
-            } catch (NotConnectedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            connector.setBoolean(0, false);
-            connector.setBoolean(0, true);
-        }
-    }
-
-    @Override
     public void initialize() {
+        // Long running initialization should be done asynchronously in background.
+
         connector = PLCConnector.getInstance();
 
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                connector.receive();
+                for (Channel channel : getThing().getChannels()) {
+                    handleCommand(channel.getUID(), RefreshType.REFRESH);
+                }
             }
         };
         pollingJob = scheduler.scheduleWithFixedDelay(runnable, 0, 1, TimeUnit.SECONDS);
 
-        // try {
-        // socket = new Socket(HOST, PORT);
-        // socket.setSoTimeout(SOCKET_TIMEOUT);
-        // TODO: Initialize the thing. If done set status to ONLINE to indicate proper working.
-        // Long running initialization should be done asynchronously in background.
         updateStatus(ThingStatus.ONLINE);
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
+    }
 
-        // Note: When initialization can NOT be done set the status with more details for further
-        // analysis. See also class ThingStatusDetail for all available status details.
-        // Add a description to give user information to understand why thing does not work
-        // as expected. E.g.
-        // updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR,
-        // "Can not access device as username and/or password are invalid");
+    @Override
+    public void handleCommand(ChannelUID channelUID, Command command) {
+        logger.debug("handleCommand called");
+        connector.receive();
+
+        Set<Item> items = linkRegistry.getLinkedItems(channelUID);
+        for (Item item : items) {
+            int index = getIndex(item);
+            try {
+                switch (channelUID.getId()) {
+                    case CHANNEL_LIGHT:
+                        updateState(channelUID, connector.getBoolean(index) == true ? OnOffType.ON : OnOffType.OFF);
+                        if (!(command instanceof RefreshType)) {
+                            connector.setBoolean(index, false);
+                            connector.setBoolean(index, true);
+                        }
+                        break;
+                    case CHANNEL_ROLLERSHUTTER:
+                        break;
+                    case CHANNEL_TEMPERATURE:
+                        updateState(channelUID, new DecimalType(connector.getFloat(index)));
+                        break;
+                    case CHANNEL_THERMOSTAT:
+                        break;
+                    case CHANNEL_OUTLET:
+                        break;
+                    default:
+                        logger.error("unknown channelUID: " + channelUID);
+                        break;
+                }
+
+            } catch (NotConnectedException e) {
+                updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, "Unable to reach SPS");
+                logger.error("unable to reach SPS", e);
+            }
+        }
+    }
+
+    @Override
+    public void handleUpdate(ChannelUID channelUID, State newState) {
+        super.handleUpdate(channelUID, newState);
+        logger.debug("handleUpdated called");
     }
 
     @Override
     public void dispose() {
         super.dispose();
         pollingJob.cancel(true);
+        updateStatus(ThingStatus.OFFLINE);
+    }
+
+    private int getIndex(Item item) {
+        int index = (int) item.getTags().toArray()[0];
+        switch (item.getType()) {
+            case "Switch":
+                if (index < 0 || index > PLCConnector.NUMBER_BOOLEANS) {
+                    throw new IllegalStateException("wrong index for Switch: " + index);
+                }
+                break;
+            case "Number":
+                if (index < 0 || index > PLCConnector.NUMBER_FLOATS) {
+                    throw new IllegalStateException("wrong index for Number: " + index);
+                }
+                break;
+            case "Rollershutter":
+                if (index < 0 || index > PLCConnector.NUMBER_SHORTS) {
+                    throw new IllegalStateException("wrong index for Rollershutter: " + index);
+                }
+                break;
+            default:
+                throw new IllegalStateException("unknown item type: " + item.getType());
+        }
+        return index;
     }
 }

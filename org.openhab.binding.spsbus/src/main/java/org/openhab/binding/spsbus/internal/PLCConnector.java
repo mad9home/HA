@@ -19,9 +19,9 @@ public class PLCConnector {
     private static final int PORT = 2012;
     private static final int SOCKET_TIMEOUT = 10000;
 
-    private static final int NUMBER_SHORTS = 220;
-    private static final int NUMBER_FLOATS = 220;
-    private static final int NUMBER_BOOLEANS = 960;
+    public static final int NUMBER_SHORTS = 220;
+    public static final int NUMBER_FLOATS = 220;
+    public static final int NUMBER_BOOLEANS = 960;
 
     private static PLCConnector connector;
     private Packet receivePacket;
