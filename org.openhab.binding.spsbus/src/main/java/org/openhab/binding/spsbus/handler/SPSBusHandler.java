@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.smarthome.core.items.Item;
 import org.eclipse.smarthome.core.library.types.DecimalType;
 import org.eclipse.smarthome.core.library.types.OnOffType;
+import org.eclipse.smarthome.core.library.types.PercentType;
 import org.eclipse.smarthome.core.thing.Channel;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
@@ -72,6 +73,7 @@ public class SPSBusHandler extends BaseThingHandler {
                         }
                         break;
                     case CHANNEL_ROLLERSHUTTER:
+                        updateState(channelUID, new PercentType(connector.getShort(index)));
                         break;
                     case CHANNEL_TEMPERATURE:
                         updateState(channelUID, new DecimalType(connector.getFloat(index)));
