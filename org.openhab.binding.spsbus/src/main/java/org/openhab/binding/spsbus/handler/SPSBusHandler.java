@@ -19,16 +19,11 @@ import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.RefreshType;
 import org.eclipse.smarthome.core.types.State;
 import org.openhab.binding.spsbus.internal.PLCConnector;
+import org.openhab.binding.spsbus.internal.exception.IndexMissingException;
 import org.openhab.binding.spsbus.internal.exception.NotConnectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * The {@link SPSBusHandler} is responsible for handling commands, which are
- * sent to one of the channels.
- *
- * @author mad9home - Initial contribution
- */
 public class SPSBusHandler extends BaseThingHandler {
 
     private final Logger logger = LoggerFactory.getLogger(SPSBusHandler.class);
@@ -43,7 +38,6 @@ public class SPSBusHandler extends BaseThingHandler {
     @Override
     public void initialize() {
         // Long running initialization should be done asynchronously in background.
-
         connector = PLCConnector.getInstance();
 
         Runnable runnable = new Runnable() {
@@ -66,14 +60,15 @@ public class SPSBusHandler extends BaseThingHandler {
 
         Set<Item> items = linkRegistry.getLinkedItems(channelUID);
         for (Item item : items) {
-            int index = getIndex(item);
+            logger.debug("item name:" + item.getName());
             try {
+                int index = getIndex(item);
                 switch (channelUID.getId()) {
                     case CHANNEL_LIGHT:
                         updateState(channelUID, connector.getBoolean(index) == true ? OnOffType.ON : OnOffType.OFF);
                         if (!(command instanceof RefreshType)) {
-                            connector.setBoolean(index, false);
                             connector.setBoolean(index, true);
+                            connector.setBoolean(index, false);
                         }
                         break;
                     case CHANNEL_ROLLERSHUTTER:
@@ -93,6 +88,8 @@ public class SPSBusHandler extends BaseThingHandler {
             } catch (NotConnectedException e) {
                 updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, "Unable to reach SPS");
                 logger.error("unable to reach SPS", e);
+            } catch (IndexMissingException e) {
+                logger.debug("", e);
             }
         }
     }
@@ -110,26 +107,29 @@ public class SPSBusHandler extends BaseThingHandler {
         updateStatus(ThingStatus.OFFLINE);
     }
 
-    private int getIndex(Item item) {
-        int index = (int) item.getTags().toArray()[0];
+    private int getIndex(Item item) throws IndexMissingException {
+        if (item.getTags() == null || item.getTags().toArray().length == 0) {
+            throw new IndexMissingException("index missing, might be a group");
+        }
+        int index = Integer.parseInt((String) item.getTags().toArray()[0]);
         switch (item.getType()) {
             case "Switch":
                 if (index < 0 || index > PLCConnector.NUMBER_BOOLEANS) {
-                    throw new IllegalStateException("wrong index for Switch: " + index);
+                    throw new IllegalStateException("Wrong boolean index for Switch: " + index);
                 }
                 break;
             case "Number":
                 if (index < 0 || index > PLCConnector.NUMBER_FLOATS) {
-                    throw new IllegalStateException("wrong index for Number: " + index);
+                    throw new IllegalStateException("Wrong float index for Number: " + index);
                 }
                 break;
             case "Rollershutter":
                 if (index < 0 || index > PLCConnector.NUMBER_SHORTS) {
-                    throw new IllegalStateException("wrong index for Rollershutter: " + index);
+                    throw new IllegalStateException("Wrong short index for Rollershutter: " + index);
                 }
                 break;
             default:
-                throw new IllegalStateException("unknown item type: " + item.getType());
+                throw new IndexMissingException("type not expected, ignoring");
         }
         return index;
     }

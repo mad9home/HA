@@ -9,11 +9,6 @@ import java.util.List;
 
 import org.openhab.binding.spsbus.internal.exception.InvalidPacketException;
 
-/**
- *
- * @author David
- *
- */
 public class Packet {
 
     // may be changeable in the future
