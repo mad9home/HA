@@ -33,6 +33,7 @@
         <item-type>Number</item-type>
         <label>Temperature Sensor</label>
         <description></description>
+        <state readOnly="true" />
     </channel-type>
     
     <channel-type id="thermostat_setpoint">

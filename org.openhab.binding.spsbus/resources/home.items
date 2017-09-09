@@ -9,3 +9,4 @@ Group:Switch:OR(ON, OFF)        Lichter      "Alle Lichter [(%d)]"
 Switch Arbeitszimmer_Licht    "Licht"       (OG_Arbeitszimmer, Lichter) ["0"]
 Number Arbeitszimmer_Temperatur    "Temperatur"       (OG_Arbeitszimmer) ["0"]
 Rollershutter Arbeitszimmer_Fensterladen	"Fensterladen"	(OG_Arbeitszimmer) ["0"]
+Number Arbeitszimmer_Thermostat		"Thermostat"	(OG_Arbeitszimmer) ["1"]

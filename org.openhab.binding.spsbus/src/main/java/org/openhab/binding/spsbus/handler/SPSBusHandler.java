@@ -10,6 +10,7 @@ import org.eclipse.smarthome.core.items.Item;
 import org.eclipse.smarthome.core.library.types.DecimalType;
 import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.library.types.PercentType;
+import org.eclipse.smarthome.core.library.types.UpDownType;
 import org.eclipse.smarthome.core.thing.Channel;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
@@ -74,13 +75,25 @@ public class SPSBusHandler extends BaseThingHandler {
                         break;
                     case CHANNEL_ROLLERSHUTTER:
                         updateState(channelUID, new PercentType(connector.getShort(index)));
+                        if (command instanceof UpDownType) {
+                            connector.setShort(index, Short.parseShort(command.toString()));
+                        }
                         break;
                     case CHANNEL_TEMPERATURE:
                         updateState(channelUID, new DecimalType(connector.getFloat(index)));
                         break;
                     case CHANNEL_THERMOSTAT:
+                        updateState(channelUID, new DecimalType(connector.getFloat(index)));
+                        if (!(command instanceof RefreshType)) {
+                            connector.setFloat(index, Float.parseFloat(command.toString()));
+                        }
                         break;
                     case CHANNEL_OUTLET:
+                        updateState(channelUID, connector.getBoolean(index) == true ? OnOffType.ON : OnOffType.OFF);
+                        if (!(command instanceof RefreshType)) {
+                            connector.setBoolean(index, true);
+                            connector.setBoolean(index, false);
+                        }
                         break;
                     default:
                         logger.error("unknown channelUID: " + channelUID);
