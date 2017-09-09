@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openhab.binding.spsbus.internal.exception.NotConnectedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -14,6 +16,7 @@ import org.openhab.binding.spsbus.internal.exception.NotConnectedException;
  *
  */
 public class PLCConnector {
+    private static final Logger logger = LoggerFactory.getLogger(PLCConnector.class);
 
     private static final String HOST = "10.100.0.1";
     private static final int PORT = 2012;
@@ -58,7 +61,7 @@ public class PLCConnector {
 
             receivePacket = new Packet(NUMBER_SHORTS, NUMBER_FLOATS, NUMBER_BOOLEANS, responseArray);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 
@@ -68,7 +71,7 @@ public class PLCConnector {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         lastSentAt = System.currentTimeMillis();

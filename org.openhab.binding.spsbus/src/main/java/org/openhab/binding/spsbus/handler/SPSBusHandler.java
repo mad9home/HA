@@ -10,7 +10,6 @@ import org.eclipse.smarthome.core.items.Item;
 import org.eclipse.smarthome.core.library.types.DecimalType;
 import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.library.types.PercentType;
-import org.eclipse.smarthome.core.library.types.UpDownType;
 import org.eclipse.smarthome.core.thing.Channel;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
@@ -28,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 public class SPSBusHandler extends BaseThingHandler {
 
-    private final Logger logger = LoggerFactory.getLogger(SPSBusHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(SPSBusHandler.class);
 
     private PLCConnector connector;
     private ScheduledFuture<?> pollingJob;
@@ -50,7 +49,7 @@ public class SPSBusHandler extends BaseThingHandler {
                 }
             }
         };
-        pollingJob = scheduler.scheduleWithFixedDelay(runnable, 0, 1, TimeUnit.SECONDS);
+        pollingJob = scheduler.scheduleWithFixedDelay(runnable, 0, 5, TimeUnit.SECONDS);
 
         updateStatus(ThingStatus.ONLINE);
     }
@@ -75,7 +74,7 @@ public class SPSBusHandler extends BaseThingHandler {
                         break;
                     case CHANNEL_ROLLERSHUTTER:
                         updateState(channelUID, new PercentType(connector.getShort(index)));
-                        if (command instanceof UpDownType) {
+                        if (!(command instanceof RefreshType)) {
                             connector.setShort(index, Short.parseShort(command.toString()));
                         }
                         break;
