@@ -2,6 +2,7 @@ package org.openhab.binding.spsbus.handler;
 
 import static org.openhab.binding.spsbus.SPSBusBindingConstants.*;
 
+import java.math.BigDecimal;
 import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -49,7 +50,7 @@ public class SPSBusHandler extends BaseThingHandler {
                 }
             }
         };
-        pollingJob = scheduler.scheduleWithFixedDelay(runnable, 0, 5, TimeUnit.SECONDS);
+        pollingJob = scheduler.scheduleWithFixedDelay(runnable, 0, 2, TimeUnit.SECONDS);
 
         updateStatus(ThingStatus.ONLINE);
     }
@@ -63,9 +64,9 @@ public class SPSBusHandler extends BaseThingHandler {
         for (Item item : items) {
             logger.debug("item name:" + item.getName());
             try {
-                int index = getIndex(item);
+                int index = getIndex(channelUID);
                 logger.debug("index:" + index);
-                switch (channelUID.getId()) {
+                switch (getThing().getChannel(channelUID.getId()).getChannelTypeUID().getId()) {
                     case CHANNEL_LIGHT:
                         updateState(channelUID, connector.getBoolean(index) == true ? OnOffType.ON : OnOffType.OFF);
                         if (!(command instanceof RefreshType)) {
@@ -96,7 +97,7 @@ public class SPSBusHandler extends BaseThingHandler {
                         }
                         break;
                     default:
-                        logger.error("unknown channelUID: " + channelUID);
+                        logger.error("unknown channelTypeUID.getId(): " + channelUID);
                         break;
                 }
 
@@ -120,6 +121,33 @@ public class SPSBusHandler extends BaseThingHandler {
         super.dispose();
         pollingJob.cancel(true);
         updateStatus(ThingStatus.OFFLINE);
+    }
+
+    private int getIndex(ChannelUID channelUID) throws IndexMissingException {
+
+        BigDecimal bcIndex = (BigDecimal) getThing().getChannel(channelUID.getId()).getConfiguration().get("index");
+        int index = bcIndex.intValue();
+        switch (getThing().getChannel(channelUID.getId()).getAcceptedItemType()) {
+            case "Switch":
+                if (index < 0 || index > PLCConnector.NUMBER_BOOLEANS) {
+                    throw new IllegalStateException("Wrong boolean index for Switch: " + index);
+                }
+                break;
+            case "Number":
+                if (index < 0 || index > PLCConnector.NUMBER_FLOATS) {
+                    throw new IllegalStateException("Wrong float index for Number: " + index);
+                }
+                break;
+            case "Rollershutter":
+                if (index < 0 || index > PLCConnector.NUMBER_SHORTS) {
+                    throw new IllegalStateException("Wrong short index for Rollershutter: " + index);
+                }
+                break;
+            default:
+                throw new IndexMissingException("type not expected, ignoring");
+        }
+        return index;
+
     }
 
     private int getIndex(Item item) throws IndexMissingException {

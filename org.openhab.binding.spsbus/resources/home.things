@@ -1,0 +1,4 @@
+Thing spsbus:spsbusthing:home {
+    Type switch_light :  arbeitszimmer_light [ index=0 ]
+    Type switch_light :  og_flur_light [ index=3 ]
+}
