@@ -64,6 +64,7 @@ public class SPSBusHandler extends BaseThingHandler {
             logger.debug("item name:" + item.getName());
             try {
                 int index = getIndex(item);
+                logger.debug("index:" + index);
                 switch (channelUID.getId()) {
                     case CHANNEL_LIGHT:
                         updateState(channelUID, connector.getBoolean(index) == true ? OnOffType.ON : OnOffType.OFF);

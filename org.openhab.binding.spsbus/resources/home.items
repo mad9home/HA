@@ -3,10 +3,60 @@ Group gEG           "Erdgeschoss"  <erdgeschoss>
 Group gOG           "Obergeschoss"  <obergeschoss>
 
 Group OG_Arbeitszimmer    "Arbeitszimmer"       <Arbeitszimmer>   (gOG)
+Group OG_Kinderzimmer    "Kinderzimmer"       <Kinderzimmer>   (gOG)
+Group OG_Schlafzimmer    "Schlafzimmer"       <Schlafzimmer>   (gOG)
+Group OG_Badezimmer    "Badezimmer"       <Badezimmer>   (gOG)
+Group OG_Waschzimmer    "Waschzimmer"       <Waschzimmer>   (gOG)
+Group OG_Flur    "Obergeschossflur"       <Obergeschossflur>   (gOG)
+Group Treppe    "Treppe"       <Treppe>   (gOG)
+
+Group EG_Flur    "Erdgeschossflur"       <Erdgeschossflur>   (gEG)
+Group EG_Bad    "Gaestebad"       <Gaestebad>   (gEG)
+Group EG_Eingang    "Eingang"       <Eingang>   (gEG)
+Group EG_Kammer    "Kammer"       <Kammer>   (gEG)
+Group EG_Wohnzimmer    "Wohnzimmer"       <Wohnzimmer>   (gEG)
+Group EG_Esszimmer    "Esszimmer"       <Esszimmer>   (gEG)
+Group EG_Kueche    "Kueche"       <Kueche>   (gEG)
+Group Treppe    "Treppe"       <Treppe>   (gEG)
 
 Group:Switch:OR(ON, OFF)        Lichter      "Alle Lichter [(%d)]"
 
-Switch Arbeitszimmer_Licht    "Licht"       (OG_Arbeitszimmer, Lichter) ["0"]
-Number Arbeitszimmer_Temperatur    "Temperatur"       (OG_Arbeitszimmer) ["0"]
+Switch Arbeitszimmer_Licht    "Arbeitszimmer_Licht"       (OG_Arbeitszimmer, Lichter) ["0"]
+Switch Kinderzimmer_Licht    "Kinderzimmer_Licht"       (OG_Kinderzimmer, Lichter) ["1"]
+Switch Badezimmer_Licht    "Badezimmer_Licht"       (OG_Badezimmer, Lichter) ["2"]
+Switch Obergeschossflur_Licht    "Obergeschossflur_Licht"       (OG_Flur, Lichter) ["3"]
+Switch Waschzimmer_Licht    "Waschzimmer_Licht"       (OG_Waschzimmer, Lichter) ["4"]
+Switch Schlafzimmer_Licht1    "Schlafzimmer_Licht1"       (OG_Schlafzimmer, Lichter) ["5"]
+Switch Schlafzimmer_Licht2    "Schlafzimmer_Licht2"       (OG_Schlafzimmer, Lichter) ["6"]
+Switch Treppe_Licht    "Treppe_Licht"       (Treppe, Lichter) ["7"]
+Switch Wohnzimmer_Licht1    "Wohnzimmer_Licht1"       (EG_Wohnzimmer, Lichter) ["8"]
+Switch Wohnzimmer_Licht2    "Wohnzimmer_Licht2"       (EG_Wohnzimmer, Lichter) ["9"]
+Switch Erdgeschossflur_Licht    "Erdgeschossflur_Licht"       (EG_Flur, Lichter) ["10"]
+Switch Kammer_Licht    "Kammer_Licht"       (EG_Kammer, Lichter) ["11"]
+Switch Eingang_Licht    "Eingang_Licht"       (EG_Eingang, Lichter) ["12"]
+Switch Gaestebad_Licht    "Gaestebad_Licht"       (EG_Bad, Lichter) ["13"]
+Switch Kueche_Licht    "Kueche_Licht"       (EG_Kueche, Lichter) ["14"]
+Switch Esszimmer_Licht    "Esszimmer_Licht"       (EG_Esszimmer, Lichter) ["15"]
+Switch Ausseneingang_Licht    "Ausseneingang_Licht"       (EG_Eingang, Lichter) ["16"]
+
+Number Kinderzimmer_Temperatur    "Kinderzimmer_Temperatur"       (OG_Kinderzimmer) ["0"]
+Number Arbeitszimmer_Temperatur    "Arbeitszimmer_Temperatur"       (OG_Arbeitszimmer) ["1"]
+Number Badezimmer_Temperatur    "Badezimmer_Temperatur"       (OG_Badezimmer) ["2"]
+Number Schlafzimmer_Temperatur    "Schlafzimmer_Temperatur"       (OG_Schlafzimmer) ["3"]
+Number Kueche_Temperatur    "Kueche_Temperatur"       (EG_Kueche) ["4"]
+Number Wohnzimmer_Temperatur    "Wohnzimmer_Temperatur"       (EG_Wohnzimmer) ["5"]
+Number Gaestebad_Temperatur    "Gaestebad_Temperatur"       (EG_Bad) ["6"]
+Number Eingang_Temperatur    "Eingang_Temperatur"       (EG_Eingang) ["7"]
+Number EG_Flur_Temperatur    "EG_Flur_Temperatur"       (EG_Flur) ["8"]
+
+Number Kinderzimmer_Thermostat    "Kinderzimmer_Thermostat"       (OG_Kinderzimmer) ["10"]
+Number Arbeitszimmer_Thermostat    "Arbeitszimmer_Thermostat"       (OG_Arbeitszimmer) ["11"]
+Number Badezimmer_Thermostat    "Badezimmer_Thermostat"       (OG_Badezimmer) ["12"]
+Number Schlafzimmer_Thermostat    "Schlafzimmer_Thermostat"       (OG_Schlafzimmer) ["13"]
+Number Kueche_Thermostat    "Kueche_Thermostat"       (EG_Kueche) ["14"]
+Number Wohnzimmer_Thermostat    "Wohnzimmer_Thermostat"       (EG_Wohnzimmer) ["15"]
+Number Gaestebad_Thermostat    "Gaestebad_Thermostat"       (EG_Bad) ["16"]
+Number Eingang_Thermostat    "Eingang_Thermostat"       (EG_Eingang) ["17"]
+Number EG_Flur_Thermostat    "EG_Flur_Thermostat"       (EG_Flur) ["18"]
+
 Rollershutter Arbeitszimmer_Fensterladen	"Fensterladen"	(OG_Arbeitszimmer) ["0"]
-Number Arbeitszimmer_Thermostat		"Thermostat"	(OG_Arbeitszimmer) ["1"]
