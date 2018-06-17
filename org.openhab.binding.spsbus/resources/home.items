@@ -1,6 +1,7 @@
-Group gKG           "Keller"  <keller>
-Group gEG           "Erdgeschoss"  <erdgeschoss>
-Group gOG           "Obergeschoss"  <obergeschoss>
+Group gKG           "Keller"  <cellar>
+Group gEG           "Erdgeschoss"  <groundfloor>
+Group gOG           "Obergeschoss"  <firstfloor>
+Group gHeizung		"Solltemperaturen" 
 
 Group OG_Arbeitszimmer    "Arbeitszimmer"       <Arbeitszimmer>   (gOG)
 Group OG_Kinderzimmer    "Kinderzimmer"       <Kinderzimmer>   (gOG)
@@ -21,42 +22,43 @@ Group Treppe    "Treppe"       <Treppe>   (gEG)
 
 Group:Switch:OR(ON, OFF)        Lichter      "Alle Lichter [(%d)]"
 
-Switch Arbeitszimmer_Licht    "Arbeitszimmer_Licht"       (OG_Arbeitszimmer, Lichter) ["0"]
-Switch Kinderzimmer_Licht    "Kinderzimmer_Licht"       (OG_Kinderzimmer, Lichter) ["1"]
-Switch Badezimmer_Licht    "Badezimmer_Licht"       (OG_Badezimmer, Lichter) ["2"]
-Switch Obergeschossflur_Licht    "Obergeschossflur_Licht"       (OG_Flur, Lichter) ["3"]
-Switch Waschzimmer_Licht    "Waschzimmer_Licht"       (OG_Waschzimmer, Lichter) ["4"]
-Switch Schlafzimmer_Licht1    "Schlafzimmer_Licht1"       (OG_Schlafzimmer, Lichter) ["5"]
-Switch Schlafzimmer_Licht2    "Schlafzimmer_Licht2"       (OG_Schlafzimmer, Lichter) ["6"]
-Switch Treppe_Licht    "Treppe_Licht"       (Treppe, Lichter) ["7"]
-Switch Wohnzimmer_Licht1    "Wohnzimmer_Licht1"       (EG_Wohnzimmer, Lichter) ["8"]
-Switch Wohnzimmer_Licht2    "Wohnzimmer_Licht2"       (EG_Wohnzimmer, Lichter) ["9"]
-Switch Erdgeschossflur_Licht    "Erdgeschossflur_Licht"       (EG_Flur, Lichter) ["10"]
-Switch Kammer_Licht    "Kammer_Licht"       (EG_Kammer, Lichter) ["11"]
-Switch Eingang_Licht    "Eingang_Licht"       (EG_Eingang, Lichter) ["12"]
-Switch Gaestebad_Licht    "Gaestebad_Licht"       (EG_Bad, Lichter) ["13"]
-Switch Kueche_Licht    "Kueche_Licht"       (EG_Kueche, Lichter) ["14"]
-Switch Esszimmer_Licht    "Esszimmer_Licht"       (EG_Esszimmer, Lichter) ["15"]
-Switch Ausseneingang_Licht    "Ausseneingang_Licht"       (EG_Eingang, Lichter) ["16"]
+Switch Arbeitszimmer_Licht    "Arbeitszimmer_Licht"       (OG_Arbeitszimmer, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Arbeitszimmer_Licht"}
+Switch Kinderzimmer_Licht    "Kinderzimmer_Licht"       (OG_Kinderzimmer, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Kinderzimmer_Licht"}
+Switch Badezimmer_Licht    "Badezimmer_Licht"       (OG_Badezimmer, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Badezimmer_Licht"}
+Switch Obergeschossflur_Licht    "Obergeschossflur_Licht"       (OG_Flur, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Obergeschossflur_Licht"}
+Switch Waschzimmer_Licht    "Waschzimmer_Licht"       (OG_Waschzimmer, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Waschzimmer_Licht"}
+Switch Schlafzimmer_Licht1    "Schlafzimmer_Licht1"       (OG_Schlafzimmer, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Schlafzimmer_Licht1"}
+Switch Schlafzimmer_Licht2    "Schlafzimmer_Licht2"       (OG_Schlafzimmer, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Schlafzimmer_Licht2"}
+Switch Treppe_Licht    "Treppe_Licht"       (Treppe, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Treppe_Licht"}
+Switch Wohnzimmer_Licht1    "Wohnzimmer_Licht1"       (EG_Wohnzimmer, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Wohnzimmer_Licht1"}
+Switch Wohnzimmer_Licht2    "Wohnzimmer_Licht2"       (EG_Wohnzimmer, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Wohnzimmer_Licht2"}
+Switch Erdgeschossflur_Licht    "Erdgeschossflur_Licht"       (EG_Flur, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Erdgeschossflur_Licht"}
+Switch Kammer_Licht    "Kammer_Licht"       (EG_Kammer, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Kammer_Licht"}
+Switch Eingang_Licht    "Eingang_Licht"       (EG_Eingang, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Eingang_Licht"}
+Switch Gaestebad_Licht    "Gaestebad_Licht"       (EG_Bad, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Gaestebad_Licht"}
+Switch Kueche_Licht    "Kueche_Licht"       (EG_Kueche, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Kueche_light"}
+Switch Esszimmer_Licht    "Esszimmer_Licht"       (EG_Esszimmer, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Esszimmer_Licht"}
+Switch Ausseneingang_Licht    "Ausseneingang_Licht"       (EG_Eingang, Lichter) ["Lighting"] {channel="spsbus:spsbusthing:home:Ausseneingang_Licht"}
 
-Number Kinderzimmer_Temperatur    "Kinderzimmer_Temperatur"       (OG_Kinderzimmer) ["0"]
-Number Arbeitszimmer_Temperatur    "Arbeitszimmer_Temperatur"       (OG_Arbeitszimmer) ["1"]
-Number Badezimmer_Temperatur    "Badezimmer_Temperatur"       (OG_Badezimmer) ["2"]
-Number Schlafzimmer_Temperatur    "Schlafzimmer_Temperatur"       (OG_Schlafzimmer) ["3"]
-Number Kueche_Temperatur    "Kueche_Temperatur"       (EG_Kueche) ["4"]
-Number Wohnzimmer_Temperatur    "Wohnzimmer_Temperatur"       (EG_Wohnzimmer) ["5"]
-Number Gaestebad_Temperatur    "Gaestebad_Temperatur"       (EG_Bad) ["6"]
-Number Eingang_Temperatur    "Eingang_Temperatur"       (EG_Eingang) ["7"]
-Number EG_Flur_Temperatur    "EG_Flur_Temperatur"       (EG_Flur) ["8"]
+Number Kinderzimmer_Temperatur    "Kinderzimmer_Temperatur [%.1f °C]"   <temperature>    (OG_Kinderzimmer) ["0"] {channel="spsbus:spsbusthing:home:Kinderzimmer_Temperatur"}
+Number Arbeitszimmer_Temperatur    "Arbeitszimmer_Temperatur [%.1f °C]"  <temperature>     (OG_Arbeitszimmer) ["1"] {channel="spsbus:spsbusthing:home:Arbeitszimmer_Temperatur"}
+Number Badezimmer_Temperatur    "Badezimmer_Temperatur [%.1f °C]"    <temperature>   (OG_Badezimmer) ["2"] {channel="spsbus:spsbusthing:home:Badezimmer_Temperatur"}
+Number Schlafzimmer_Temperatur    "Schlafzimmer_Temperatur [%.1f °C]"     <temperature>  (OG_Schlafzimmer) ["3"] {channel="spsbus:spsbusthing:home:Schlafzimmer_Temperatur"}
+Number Kueche_Temperatur    "Kueche_Temperatur [%.1f °C]"  <temperature>     (EG_Kueche) ["4"] {channel="spsbus:spsbusthing:home:Kueche_Temperatur"}
+Number Wohnzimmer_Temperatur    "Wohnzimmer_Temperatur [%.1f °C]"    <temperature>   (EG_Wohnzimmer) ["5"] {channel="spsbus:spsbusthing:home:Wohnzimmer_Temperatur"}
+Number Gaestebad_Temperatur    "Gaestebad_Temperatur [%.1f °C]"  <temperature>     (EG_Bad) ["6"] {channel="spsbus:spsbusthing:home:Gaestebad_Temperatur"}
+Number Eingang_Temperatur    "Eingang_Temperatur [%.1f °C]"    <temperature>   (EG_Eingang) ["7"] {channel="spsbus:spsbusthing:home:Eingang_Temperatur"}
+Number EG_Flur_Temperatur    "EG_Flur_Temperatur [%.1f °C]"    <temperature>   (EG_Flur) ["8"] {channel="spsbus:spsbusthing:home:EG_Flur_Temperatur"}
 
-Number Kinderzimmer_Thermostat    "Kinderzimmer_Thermostat"       (OG_Kinderzimmer) ["10"]
-Number Arbeitszimmer_Thermostat    "Arbeitszimmer_Thermostat"       (OG_Arbeitszimmer) ["11"]
-Number Badezimmer_Thermostat    "Badezimmer_Thermostat"       (OG_Badezimmer) ["12"]
-Number Schlafzimmer_Thermostat    "Schlafzimmer_Thermostat"       (OG_Schlafzimmer) ["13"]
-Number Kueche_Thermostat    "Kueche_Thermostat"       (EG_Kueche) ["14"]
-Number Wohnzimmer_Thermostat    "Wohnzimmer_Thermostat"       (EG_Wohnzimmer) ["15"]
-Number Gaestebad_Thermostat    "Gaestebad_Thermostat"       (EG_Bad) ["16"]
-Number Eingang_Thermostat    "Eingang_Thermostat"       (EG_Eingang) ["17"]
-Number EG_Flur_Thermostat    "EG_Flur_Thermostat"       (EG_Flur) ["18"]
+Number Kinderzimmer_Thermostat    "Kinderzimmer_Thermostat [%.1f °C]"   <temperature>    (gHeizung) ["10"] {channel="spsbus:spsbusthing:home:Kinderzimmer_Thermostat"}
+Number Arbeitszimmer_Thermostat    "Arbeitszimmer_Thermostat [%.1f °C]"  <temperature>     (gHeizung) ["11"] {channel="spsbus:spsbusthing:home:Arbeitszimmer_Thermostat"}
+Number Badezimmer_Thermostat    "Badezimmer_Thermostat [%.1f °C]"  <temperature>     (gHeizung) ["12"] {channel="spsbus:spsbusthing:home:Badezimmer_Thermostat"}
+Number Schlafzimmer_Thermostat    "Schlafzimmer_Thermostat [%.1f °C]"   <temperature>    (gHeizung) ["13"] {channel="spsbus:spsbusthing:home:Schlafzimmer_Thermostat"}
+Number Kueche_Thermostat    "Kueche_Thermostat [%.1f °C]"  <temperature>     (gHeizung) ["14"] {channel="spsbus:spsbusthing:home:Kueche_Thermostat"}
+Number Wohnzimmer_Thermostat    "Wohnzimmer_Thermostat [%.1f °C]"   <temperature>    (gHeizung) ["15"] {channel="spsbus:spsbusthing:home:Wohnzimmer_Thermostat"}
+Number Gaestebad_Thermostat    "Gaestebad_Thermostat [%.1f °C]"  <temperature>     (gHeizung) ["16"] {channel="spsbus:spsbusthing:home:Gaestebad_Thermostat"}
+Number Eingang_Thermostat    "Eingang_Thermostat [%.1f °C]"    <temperature>   (gHeizung) ["17"] {channel="spsbus:spsbusthing:home:Eingang_Thermostat"}
+Number EG_Flur_Thermostat    "EG_Flur_Thermostat [%.1f °C]"   <temperature>    (gHeizung) ["18"] {channel="spsbus:spsbusthing:home:EG_Flur_Thermostat"}
 
 Rollershutter Arbeitszimmer_Fensterladen	"Fensterladen"	(OG_Arbeitszimmer) ["0"]
+DateTime CurrentDate            "Date [%1$tA, %1$td.%1$tm.%1$tY]"   <calendar>  { channel="ntp:ntp:local:dateTime" }
