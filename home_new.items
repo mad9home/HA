@@ -1,0 +1,77 @@
+Group gKG           "Keller"  <cellar>
+Group gEG           "Erdgeschoss"  <groundfloor>
+Group gOG           "Obergeschoss"  <firstfloor>
+Group gGarten		"Garten"	<garden>
+Group gHeizung		"Solltemperaturen" 
+
+Group OG_Arbeitszimmer    "Arbeitszimmer"       <office>   (gOG)
+Group OG_Kinderzimmer    "Kinderzimmer"       <girl_2>   (gOG)
+Group OG_Schlafzimmer    "Schlafzimmer"       <bedroom>   (gOG)
+Group OG_Badezimmer    "Badezimmer"       <bath>   (gOG)
+Group OG_Waschzimmer    "Waschzimmer"       <washingmachine>   (gOG)
+Group OG_Flur    "Obergeschossflur"       <corridor>   (gOG)
+Group Treppe    "Treppe"       <treppe>   (gOG,gEG)
+
+Group EG_Flur    "Erdgeschossflur"       <corridor>   (gEG)
+Group EG_Bad    "Gaestebad"       <toilet>   (gEG)
+Group EG_Eingang    "Eingang"       <corridor>   (gEG)
+Group EG_Kammer    "Kammer"       <vacuum>   (gEG)
+Group EG_Wohnzimmer    "Wohnzimmer"       <living_room>   (gEG)
+Group EG_Esszimmer    "Esszimmer"       <dining>   (gEG)
+Group EG_Kueche    "Kueche"       <kitchen>   (gEG)
+
+
+Group:Switch:OR(ON, OFF)        Lichter      "Alle Lichter [(%d)]"
+
+Switch Arbeitszimmer_Licht    "Arbeitszimmer Licht"       (OG_Arbeitszimmer, Lichter) ["Lighting"] {channel="spsbusbinding:light:Arbeitszimmer_Licht:light"}
+Switch Kinderzimmer_Licht    "Kinderzimmer Licht"       (OG_Kinderzimmer, Lichter) ["Lighting"] {channel="spsbusbinding:light:Kinderzimmer_Licht:light"}
+Switch Badezimmer_Licht    "Badezimmer Licht"       (OG_Badezimmer, Lichter) ["Lighting"] {channel="spsbusbinding:light:Badezimmer_Licht:light"}
+Switch Obergeschossflur_Licht    "Obergeschossflur Licht"       (OG_Flur, Lichter) ["Lighting"] {channel="spsbusbinding:light:Obergeschossflur_Licht:light"}
+Switch Waschzimmer_Licht    "Waschzimmer Licht"       (OG_Waschzimmer, Lichter) ["Lighting"] {channel="spsbusbinding:light:Waschzimmer_Licht:light"}
+Switch Schlafzimmer_Licht1    "Schlafzimmer Licht1"       (OG_Schlafzimmer, Lichter) ["Lighting"] {channel="spsbusbinding:light:Schlafzimmer_Licht1:light"}
+Switch Schlafzimmer_Licht2    "Schlafzimmer Licht2"       (OG_Schlafzimmer, Lichter) ["Lighting"] {channel="spsbusbinding:light:Schlafzimmer_Licht2:light"}
+Switch Treppe_Licht    "Treppe Licht"       (Treppe, Lichter) ["Lighting"] {channel="spsbusbinding:light:Treppe_Licht:light"}
+Switch Wohnzimmer_Licht1    "Wohnzimmer Licht1"       (EG_Wohnzimmer, Lichter) ["Lighting"] {channel="spsbusbinding:light:Wohnzimmer_Licht1:light"}
+Switch Wohnzimmer_Licht2    "Wohnzimmer Licht2"       (EG_Wohnzimmer, Lichter) ["Lighting"] {channel="spsbusbinding:light:Wohnzimmer_Licht2:light"}
+Switch Erdgeschossflur_Licht    "Erdgeschossflur Licht"       (EG_Flur, Lichter) ["Lighting"] {channel="spsbusbinding:light:Erdgeschossflur_Licht:light"}
+Switch Kammer_Licht    "Kammer Licht"       (EG_Kammer, Lichter) ["Lighting"] {channel="spsbusbinding:light:Kammer_Licht:light"}
+Switch Eingang_Licht    "Eingang Licht"       (EG_Eingang, Lichter) ["Lighting"] {channel="spsbusbinding:light:Eingang_Licht:light"}
+Switch Gaestebad_Licht    "Gaestebad Licht"       (EG_Bad, Lichter) ["Lighting"] {channel="spsbusbinding:light:Gaestebad_Licht:light"}
+Switch Kueche_Licht    "Kueche Licht"       (EG_Kueche, Lichter) ["Lighting"] {channel="spsbusbinding:light:Kueche_light:light"}
+Switch Esszimmer_Licht    "Esszimmer Licht"       (EG_Esszimmer, Lichter) ["Lighting"] {channel="spsbusbinding:light:Esszimmer_Licht:light"}
+Switch Ausseneingang_Licht    "Ausseneingang Licht"    <outdoorlight>   (EG_Eingang, Lichter) ["Lighting"] {channel="spsbusbinding:light:Ausseneingang_Licht:light"}
+Switch Kaffemaschine	"Kaffeemaschine" <koffeem> (EG_Kueche)  ["Switchable"] {channel="spsbusbinding:outlet:Kaffeemaschine:outlet"}
+Switch Garten_Steckdosen_hinten	"Gartensteckdosen hinten" <outlet> (gGarten)  ["Switchable"] {channel="spsbusbinding:outlet:Garten_Steckdosen_hinten:outlet"}
+Switch Garten_Steckdosen_vorne	"Gartensteckdosen vorne" <outlet> (gGarten)  ["Switchable"] {channel="spsbusbinding:outlet:Garten_Steckdosen_vorne:outlet"}
+Switch Garten_Brunnenpumpe	"Brunnenpumpe"  (gGarten)  ["Switchable"] {channel="spsbusbinding:outlet:Garten_Brunnenpumpe:outlet"}
+Switch Garten_Brunnenpumpe_Reset	"Brunnenpumpe Reset"  (gGarten)  ["Switchable"] {channel="spsbusbinding:outlet:Garten_Brunnenpumpe_Reset:outlet"}
+Switch Garten_Regner_hinten	"Regner hinten"  (gGarten)  ["Switchable"] {channel="spsbusbinding:outlet:Garten_Regner_hinten:outlet"}
+Switch Garten_Regner_vorne	"Regner vorne"  (gGarten)  ["Switchable"] {channel="spsbusbinding:outlet:Garten_Regner_vorne:outlet"}
+Switch Garten_Ventil3	"Ventil3"  (gGarten)  ["Switchable"] {channel="spsbusbinding:outlet:Garten_Ventil3:outlet"}
+Switch Garten_Ventil4	"Ventil4"  (gGarten)  ["Switchable"] {channel="spsbusbinding:outlet:Garten_Ventil4:outlet"}
+
+
+
+Number Kinderzimmer_Temperatur    "Kinderzimmer_Ist [%.1f °C]"   <temperature>    (OG_Kinderzimmer) ["0"] {channel="spsbusbinding:temperature:Kinderzimmer_Temperatur:sensor"}
+Number Arbeitszimmer_Temperatur    "Arbeitszimmer_Ist [%.1f °C]"  <temperature>     (OG_Arbeitszimmer) ["1"] {channel="spsbusbinding:temperature:Arbeitszimmer_Temperatur:sensor"}
+Number Badezimmer_Temperatur    "Badezimmer_Ist [%.1f °C]"    <temperature>   (OG_Badezimmer) ["2"] {channel="spsbusbinding:temperature:Badezimmer_Temperatur:sensor"}
+Number Schlafzimmer_Temperatur    "Schlafzimmer_Ist [%.1f °C]"   <temperature>    (OG_Schlafzimmer) ["3"] {channel="spsbusbinding:temperature:Schlafzimmer_Temperatur:sensor"}
+Number Kueche_Temperatur    "Küche_Ist [%.1f °C]"    <temperature>   (EG_Kueche) ["4"] {channel="spsbusbinding:temperature:Kueche_Temperatur:sensor"}
+Number Wohnzimmer_Temperatur    "Wohnzimmer_Ist [%.1f °C]"   <temperature>    (EG_Wohnzimmer) ["5"] {channel="spsbusbinding:temperature:Wohnzimmer_Temperatur:sensor"}
+Number Gaestebad_Temperatur    "Gästebad_Ist [%.1f °C]"  <temperature>     (EG_Bad) ["6"] {channel="spsbusbinding:temperature:Gaestebad_Temperatur:sensor"}
+Number Eingang_Temperatur    "Eingang_Ist [%.1f °C]"    <temperature>   (EG_Eingang) ["7"] {channel="spsbusbinding:temperature:Eingang_Temperatur:sensor"}
+Number EG_Flur_Temperatur    "EG_Flur_Ist [%.1f °C]"    <temperature>   (EG_Flur) ["8"] {channel="spsbusbinding:temperature:EG_Flur_Temperatur:sensor"}
+
+Number Kinderzimmer_Thermostat	    "Kinderzimmer_Soll [%.1f °C]"   <temperature>    (gHeizung,OG_Kinderzimmer) ["10"] {channel="spsbusbinding:thermostat:Kinderzimmer_Thermostat:setpoint"}
+Number Arbeitszimmer_Thermostat   "Arbeitszimmer_Soll [%.1f °C]"  <temperature>     (gHeizung,OG_Arbeitszimmer) ["11"] {channel="spsbusbinding:thermostat:Arbeitszimmer_Thermostat:setpoint"}
+Number Badezimmer_Thermostat    "Badezimmer_Soll [%.1f °C]"  <temperature>     (gHeizung,OG_Badezimmer) ["12"] {channel="spsbusbinding:thermostat:Badezimmer_Thermostat:setpoint"}
+Number Schlafzimmer_Thermostat    "Schlafzimmer_Soll [%.1f °C]"   <temperature>    (gHeizung,OG_Schlafzimmer) ["13"] {channel="spsbusbinding:thermostat:Schlafzimmer_Thermostat:setpoint"}
+Number Kueche_Thermostat    "Kueche_Soll [%.1f °C]"  <temperature>     (gHeizung,EG_Kueche) ["14"] {channel="spsbusbinding:thermostat:Kueche_Thermostat:setpoint"}
+Number Wohnzimmer_Thermostat    "Wohnzimmer_Soll [%.1f °C]"   <temperature>    (gHeizung,EG_Wohnzimmer) ["15"] {channel="spsbusbinding:thermostat:Wohnzimmer_Thermostat:setpoint"}
+Number Gaestebad_Thermostat    "Gästebad_Soll [%.1f °C]"  <temperature>     (gHeizung,EG_Bad) ["16"] {channel="spsbusbinding:thermostat:Gaestebad_Thermostat:setpoint"}
+Number Eingang_Thermostat    "Eingang_Soll [%.1f °C]"    <temperature>   (gHeizung,EG_Eingang) ["17"] {channel="spsbusbinding:thermostat:Eingang_Thermostat:setpoint"}
+Number EG_Flur_Thermostat    "EG_Flur_Soll [%.1f °C]"   <temperature>    (gHeizung,EG_Flur) ["18"] {channel="spsbusbinding:thermostat:EG_Flur_Thermostat:setpoint"}
+
+
+Rollershutter Arbeitszimmer_Fensterladen	"Fensterladen"	(OG_Arbeitszimmer) ["0"]
+DateTime CurrentDate            "Date [%1$tA, %1$td.%1$tm.%1$tY]"   <calendar>  { channel="ntp:ntp:local:dateTime" }
