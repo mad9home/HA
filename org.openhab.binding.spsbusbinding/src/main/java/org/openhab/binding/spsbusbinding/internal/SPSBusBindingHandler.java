@@ -78,27 +78,30 @@ public class SPSBusBindingHandler extends BaseThingHandler {
             int index = getIndex(channelUID);
             logger.debug("index:" + index);
             switch (getThing().getChannel(channelUID.getId()).getChannelTypeUID().getId()) {
-                case CHANNEL_LIGHT:
+                case CHANNEL_SWITCH:
                     updateState(channelUID, connector.getBoolean(index) == true ? OnOffType.ON : OnOffType.OFF);
                     if (!(command instanceof RefreshType)) {
                         connector.setBoolean(index, true);
                         connector.setBoolean(index, false);
                     }
+                    updateState(channelUID, connector.getBoolean(index) == true ? OnOffType.ON : OnOffType.OFF);
                     break;
                 case CHANNEL_ROLLERSHUTTER:
                     updateState(channelUID, new PercentType(connector.getShort(index)));
                     if (!(command instanceof RefreshType)) {
                         connector.setShort(index, Short.parseShort(command.toString()));
                     }
+                    updateState(channelUID, new PercentType(connector.getShort(index)));
                     break;
-                case CHANNEL_TEMPERATURE:
+                case CHANNEL_SENSOR:
                     updateState(channelUID, new DecimalType(connector.getFloat(index)));
                     break;
-                case CHANNEL_THERMOSTAT:
+                case CHANNEL_SETPOINT:
                     updateState(channelUID, new DecimalType(connector.getFloat(index)));
                     if (!(command instanceof RefreshType)) {
                         connector.setFloat(index, Float.parseFloat(command.toString()));
                     }
+                    updateState(channelUID, new DecimalType(connector.getFloat(index)));
                     break;
                 case CHANNEL_OUTLET:
                     updateState(channelUID, connector.getBoolean(index) == true ? OnOffType.ON : OnOffType.OFF);
@@ -106,12 +109,12 @@ public class SPSBusBindingHandler extends BaseThingHandler {
                         connector.setBoolean(index, true);
                         connector.setBoolean(index, false);
                     }
+                    updateState(channelUID, connector.getBoolean(index) == true ? OnOffType.ON : OnOffType.OFF);
                     break;
                 default:
                     logger.error("unknown channelTypeUID.getId(): " + channelUID);
                     break;
             }
-
         } catch (NotConnectedException e) {
             updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, "Unable to reach SPS");
             logger.error("unable to reach SPS", e);
@@ -128,7 +131,7 @@ public class SPSBusBindingHandler extends BaseThingHandler {
     }
 
     private int getIndex(ChannelUID channelUID) throws IndexMissingException {
-        BigDecimal bcIndex = (BigDecimal) getThing().getChannel(channelUID.getId()).getConfiguration().get("index");
+        BigDecimal bcIndex = (BigDecimal) getThing().getConfiguration().get("index");
         int index = bcIndex.intValue();
         switch (getThing().getChannel(channelUID.getId()).getAcceptedItemType()) {
             case "Switch":

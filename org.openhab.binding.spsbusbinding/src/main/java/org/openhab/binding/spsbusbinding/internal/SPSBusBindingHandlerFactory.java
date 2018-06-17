@@ -8,9 +8,10 @@
  */
 package org.openhab.binding.spsbusbinding.internal;
 
-import static org.openhab.binding.spsbusbinding.internal.SPSBusBindingBindingConstants.THING_TYPE_UID;
+import static org.openhab.binding.spsbusbinding.internal.SPSBusBindingBindingConstants.*;
 
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
@@ -32,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(configurationPid = "binding.spsbusbinding", service = ThingHandlerFactory.class)
 public class SPSBusBindingHandlerFactory extends BaseThingHandlerFactory {
 
-    private static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Collections.singleton(THING_TYPE_UID);
+    private static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = new HashSet<>(Arrays.asList(THING_TYPE_LIGHT,
+            THING_TYPE_TEMPERATURE, THING_TYPE_ROLLERSHUTTER, THING_TYPE_THERMOSTAT, THING_TYPE_OUTLET));
 
     @Override
     public boolean supportsThingType(ThingTypeUID thingTypeUID) {
@@ -43,7 +45,9 @@ public class SPSBusBindingHandlerFactory extends BaseThingHandlerFactory {
     protected @Nullable ThingHandler createHandler(Thing thing) {
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
-        if (thingTypeUID.equals(THING_TYPE_UID)) {
+        if (thingTypeUID.equals(THING_TYPE_LIGHT) || thingTypeUID.equals(THING_TYPE_TEMPERATURE)
+                || thingTypeUID.equals(THING_TYPE_ROLLERSHUTTER) || thingTypeUID.equals(THING_TYPE_THERMOSTAT)
+                || thingTypeUID.equals(THING_TYPE_OUTLET)) {
             return new SPSBusBindingHandler(thing);
         }
 
