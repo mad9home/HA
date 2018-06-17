@@ -11,5 +11,6 @@
 
 	<modules>
 		<module>org.openhab.binding.spsbus</module>
+		<module>org.openhab.binding.spsbusbinding</module>
 	</modules>
 </project>

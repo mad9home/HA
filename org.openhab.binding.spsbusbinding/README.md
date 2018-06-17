@@ -49,4 +49,4 @@ _Provide a full usage example based on textual configuration files (*.things, *.
 
 ## Any custom content here!
 
-_DEPRECATED. Worked with Openhab 2.1 only!_
+_NEW Version. Works with Openhab 2.3_
