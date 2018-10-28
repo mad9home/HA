@@ -4,13 +4,114 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
+	<parent>
+		<artifactId>pom</artifactId>
+		<groupId>org.openhab.binding</groupId>
+		<version>2.3.0</version>
+	</parent>
+
 	<groupId>org.david.home</groupId>
 	<artifactId>org.david.home.parent</artifactId>
-	<version>2.2.0-SNAPSHOT</version>
+	<version>2.3.0</version>
 	<packaging>pom</packaging>
+
+	<distributionManagement>
+		<repository>
+			<id>bintray</id>
+			<url>https://api.bintray.com/maven/openhab/mvn/openhab2-addons/;publish=1</url>
+		</repository>
+		<snapshotRepository>
+			<id>jfrog</id>
+			<url>https://openhab.jfrog.io/openhab/libs-snapshot-local</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<properties>
+		<ohc.version>2.3.0</ohc.version>
+	</properties>
+
+	<repositories>
+
+		<!-- releases -->
+		<repository>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>jcenter</id>
+			<name>JCenter Repository</name>
+			<url>https://jcenter.bintray.com/</url>
+		</repository>
+
+		<repository>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>openhab-artifactory-release</id>
+			<name>JFrog Artifactory Repository</name>
+			<url>https://openhab.jfrog.io/openhab/libs-release</url>
+		</repository>
+
+		<!-- snapshots -->
+		<repository>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+			<id>openhab-artifactory-snapshot</id>
+			<name>JFrog Artifactory Repository</name>
+			<url>https://openhab.jfrog.io/openhab/libs-snapshot</url>
+		</repository>
+
+		<!-- openHAB dependencies p2 repository -->
+		<repository>
+			<id>p2-openhab-deps-repo</id>
+			<url>https://dl.bintray.com/openhab/p2/openhab-deps-repo/${ohdr.version}</url>
+			<layout>p2</layout>
+		</repository>
+
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>jcenter</id>
+			<name>JCenter Repository</name>
+			<url>https://jcenter.bintray.com/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>artifactory</id>
+			<name>JFrog Artifactory Repository</name>
+			<url>https://openhab.jfrog.io/openhab/libs-release</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<modules>
 		<module>org.openhab.binding.spsbus</module>
 		<module>org.openhab.binding.spsbusbinding</module>
 	</modules>
+
 </project>

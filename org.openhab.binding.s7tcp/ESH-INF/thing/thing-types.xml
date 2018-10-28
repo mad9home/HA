@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="S7TCPbinding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+
+	<bridge-type id="S7TCPBridge">
+		<label>S7TCP Bridge</label>
+		<description></description>
+		<config-description>
+		  <parameter name="host" type="text">
+		      <label>Hostname</label>
+		      <context>network_address</context>
+		      <description></description>
+		      <default>10.100.0.1</default>
+		      <required>false</required>
+		  </parameter>
+		  <parameter name="port" type="integer">
+              <label>Port</label>
+              <description></description>
+              <default>2012</default>
+              <required>false</required>
+          </parameter>
+          <parameter name="refresh" type="integer">
+              <label>Refresh frequency</label>
+              <description></description>
+              <default>5</default>
+              <required>false</required>
+          </parameter>
+		</config-description>
+	</bridge-type>
+
+	<thing-type id="light">
+		<supported-bridge-type-refs>
+			<bridge-type-ref id="S7TCPBridge" />
+		</supported-bridge-type-refs>
+		<label>Light</label>
+		<description></description>
+		<channels>
+			<channel id="switch" typeId="switch" />
+		</channels>
+		<config-description>
+			<parameter name="index" type="integer" required="true">
+				<label>Index</label>
+				<description>Index</description>
+			</parameter>
+		</config-description>
+	</thing-type>
+
+	<thing-type id="rollershutter">
+		<supported-bridge-type-refs>
+			<bridge-type-ref id="S7TCPBridge" />
+		</supported-bridge-type-refs>
+		<label>Rollershutter</label>
+		<description></description>
+		<channels>
+			<channel id="rollershutter" typeId="rollershutter" />
+		</channels>
+		<config-description>
+			<parameter name="index" type="integer" required="true">
+				<label>Index</label>
+				<description>Index</description>
+			</parameter>
+		</config-description>
+	</thing-type>
+
+	<thing-type id="temperature">
+		<supported-bridge-type-refs>
+			<bridge-type-ref id="S7TCPBridge" />
+		</supported-bridge-type-refs>
+		<label>Temperature</label>
+		<description></description>
+		<channels>
+			<channel id="sensor" typeId="sensor" />
+		</channels>
+		<config-description>
+			<parameter name="index" type="integer" required="true">
+				<label>Index</label>
+				<description>Index</description>
+			</parameter>
+		</config-description>
+	</thing-type>
+
+	<thing-type id="thermostat">
+		<supported-bridge-type-refs>
+			<bridge-type-ref id="S7TCPBridge" />
+		</supported-bridge-type-refs>
+		<label>Thermostat</label>
+		<description></description>
+		<channels>
+			<channel id="setpoint" typeId="setpoint" />
+		</channels>
+		<config-description>
+			<parameter name="index" type="integer" required="true">
+				<label>Index</label>
+				<description>Index</description>
+			</parameter>
+		</config-description>
+	</thing-type>
+
+	<thing-type id="outlet">
+		<supported-bridge-type-refs>
+			<bridge-type-ref id="S7TCPBridge" />
+		</supported-bridge-type-refs>
+		<label>Outlet</label>
+		<description></description>
+		<channels>
+			<channel id="outlet" typeId="outlet" />
+		</channels>
+		<config-description>
+			<parameter name="index" type="integer" required="true">
+				<label>Index</label>
+				<description>Index</description>
+			</parameter>
+		</config-description>
+	</thing-type>
+
+	<channel-type id="switch">
+		<item-type>Switch</item-type>
+		<label>On/Off</label>
+		<description></description>
+	</channel-type>
+
+	<channel-type id="rollershutter">
+		<item-type>Rollershutter</item-type>
+		<label>Rollershutter</label>
+		<description></description>
+	</channel-type>
+
+	<channel-type id="sensor">
+		<item-type>Number</item-type>
+		<label>Sensor</label>
+		<description></description>
+		<state readOnly="true" />
+	</channel-type>
+
+	<channel-type id="setpoint">
+		<item-type>Number</item-type>
+		<label>Setpoint</label>
+		<description></description>
+	</channel-type>
+
+	<channel-type id="outlet">
+		<item-type>Switch</item-type>
+		<label>Power Outlet</label>
+		<description></description>
+	</channel-type>
+
+</thing:thing-descriptions>

@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Bundle-ManifestVersion: 2
+Bundle-Name: S7 TCP Binding
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-SymbolicName: org.openhab.binding.s7tcp;singleton:=true
+Bundle-Vendor: openHAB
+Bundle-Version: 2.3.0
+Import-Package: 
+ org.eclipse.jdt.annotation;resolution:=optional,
+ org.eclipse.smarthome.config.core,
+ org.eclipse.smarthome.core.library.types,
+ org.eclipse.smarthome.core.thing,
+ org.eclipse.smarthome.core.thing.binding,
+ org.eclipse.smarthome.core.thing.binding.builder,
+ org.eclipse.smarthome.core.thing.type,
+ org.eclipse.smarthome.core.types,
+ org.eclipse.smarthome.core.util,
+ org.slf4j
+Export-Package: 
+ org.openhab.binding.s7tcpbinding.handler
+Service-Component: OSGI-INF/*.xml
