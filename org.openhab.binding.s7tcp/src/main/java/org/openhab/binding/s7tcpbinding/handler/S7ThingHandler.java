@@ -111,7 +111,7 @@ public class S7ThingHandler extends BaseThingHandler {
     }
 
     public void refresh() {
-        logger.debug("refresh called");
+        logger.trace("refresh called");
         S7TCPBindingHandler bridgeHandler = getBridgeHandler();
         try {
             for (Channel channel : getThing().getChannels()) {

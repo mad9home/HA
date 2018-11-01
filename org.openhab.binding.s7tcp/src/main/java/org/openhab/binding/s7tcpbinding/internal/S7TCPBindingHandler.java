@@ -50,6 +50,8 @@ public class S7TCPBindingHandler extends BaseBridgeHandler {
     private @Nullable String host;
     private int port;
     private @Nullable Socket socket;
+    private DataOutputStream request;
+    private DataInputStream response;
     private final Object lock = new Object();
     private @Nullable ScheduledFuture<?> refreshJob;
 
@@ -114,8 +116,7 @@ public class S7TCPBindingHandler extends BaseBridgeHandler {
     private void send(Packet p) throws S7TCPClientError {
         synchronized (this.lock) {
             checkConnection();
-            try (DataOutputStream request = new DataOutputStream(socket.getOutputStream());
-                    DataInputStream response = new DataInputStream(socket.getInputStream())) {
+            try {
 
                 request.write(p.asByteArray());
 
@@ -159,6 +160,8 @@ public class S7TCPBindingHandler extends BaseBridgeHandler {
             try {
                 socket = new Socket(host, port);
                 socket.setSoTimeout(SOCKET_TIMEOUT);
+                request = new DataOutputStream(socket.getOutputStream());
+                response = new DataInputStream(socket.getInputStream());
             } catch (UnknownHostException e) {
                 logger.error("unknown socket host {}", host);
                 socket = null;
@@ -185,6 +188,19 @@ public class S7TCPBindingHandler extends BaseBridgeHandler {
         synchronized (this.lock) {
             try {
                 socket.close();
+
+            } catch (IOException e1) {
+                logger.error("{}", e1.getLocalizedMessage(), e1);
+            }
+            try {
+                request.close();
+
+            } catch (IOException e1) {
+                logger.error("{}", e1.getLocalizedMessage(), e1);
+            }
+            try {
+                response.close();
+
             } catch (IOException e1) {
                 logger.error("{}", e1.getLocalizedMessage(), e1);
             }
