@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<thing:thing-descriptions bindingId="S7TCPbinding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<thing:thing-descriptions bindingId="s7tcpbinding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
 	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-	<bridge-type id="S7TCPBridge">
+	<bridge-type id="s7tcpbridge">
 		<label>S7TCP Bridge</label>
 		<description></description>
 		<config-description>
@@ -31,7 +31,7 @@
 
 	<thing-type id="light">
 		<supported-bridge-type-refs>
-			<bridge-type-ref id="S7TCPBridge" />
+			<bridge-type-ref id="s7tcpbridge" />
 		</supported-bridge-type-refs>
 		<label>Light</label>
 		<description></description>
@@ -48,7 +48,7 @@
 
 	<thing-type id="rollershutter">
 		<supported-bridge-type-refs>
-			<bridge-type-ref id="S7TCPBridge" />
+			<bridge-type-ref id="s7tcpbridge" />
 		</supported-bridge-type-refs>
 		<label>Rollershutter</label>
 		<description></description>
@@ -65,7 +65,7 @@
 
 	<thing-type id="temperature">
 		<supported-bridge-type-refs>
-			<bridge-type-ref id="S7TCPBridge" />
+			<bridge-type-ref id="s7tcpbridge" />
 		</supported-bridge-type-refs>
 		<label>Temperature</label>
 		<description></description>
@@ -82,7 +82,7 @@
 
 	<thing-type id="thermostat">
 		<supported-bridge-type-refs>
-			<bridge-type-ref id="S7TCPBridge" />
+			<bridge-type-ref id="s7tcpbridge" />
 		</supported-bridge-type-refs>
 		<label>Thermostat</label>
 		<description></description>
@@ -99,7 +99,7 @@
 
 	<thing-type id="outlet">
 		<supported-bridge-type-refs>
-			<bridge-type-ref id="S7TCPBridge" />
+			<bridge-type-ref id="s7tcpbridge" />
 		</supported-bridge-type-refs>
 		<label>Outlet</label>
 		<description></description>

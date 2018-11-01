@@ -24,10 +24,10 @@ import org.eclipse.smarthome.core.thing.ThingTypeUID;
 @NonNullByDefault
 public class S7TCPBindingConstants {
 
-    private static final String BINDING_ID = "S7TCPbinding";
+    private static final String BINDING_ID = "s7tcpbinding";
 
     // List of all Thing Type UIDs
-    public static final ThingTypeUID THING_TYPE_BRIDGE = new ThingTypeUID(BINDING_ID, "S7TCPBridge");
+    public static final ThingTypeUID THING_TYPE_BRIDGE = new ThingTypeUID(BINDING_ID, "s7tcpbridge");
     public static final ThingTypeUID THING_TYPE_LIGHT = new ThingTypeUID(BINDING_ID, "light");
     public static final ThingTypeUID THING_TYPE_ROLLERSHUTTER = new ThingTypeUID(BINDING_ID, "rollershutter");
     public static final ThingTypeUID THING_TYPE_TEMPERATURE = new ThingTypeUID(BINDING_ID, "temperature");
@@ -41,7 +41,7 @@ public class S7TCPBindingConstants {
     public static final String CHANNEL_SETPOINT = "setpoint";
     public static final String CHANNEL_OUTLET = "outlet";
 
-    public static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Stream.of(THING_TYPE_BRIDGE,
+    public static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Stream.of(THING_TYPE_BRIDGE, THING_TYPE_LIGHT,
             THING_TYPE_TEMPERATURE, THING_TYPE_ROLLERSHUTTER, THING_TYPE_THERMOSTAT, THING_TYPE_OUTLET)
             .collect(Collectors.toSet());
 

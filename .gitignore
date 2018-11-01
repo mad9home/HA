@@ -4,5 +4,6 @@
 */.project
 */.settings/
 /.settings/
+/bin/
 .project
 .classpath

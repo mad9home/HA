@@ -68,7 +68,8 @@ public class S7TCPBindingHandler extends BaseBridgeHandler {
         S7TCPBindingConfiguration config = getConfigAs(S7TCPBindingConfiguration.class);
         host = config.host;
         port = config.port;
-
+        sendPacket = createInitialPacket();
+        receivePacket = createInitialPacket();
         Runnable refreshS7Units = () -> {
             try {
                 checkConnection();
@@ -120,8 +121,8 @@ public class S7TCPBindingHandler extends BaseBridgeHandler {
 
                 byte[] responseArray = new byte[NUMBER_SHORTS * 2 + NUMBER_FLOATS * 4 + NUMBER_BOOLEANS / 8];
                 response.read(responseArray);
-
                 receivePacket = new Packet(NUMBER_SHORTS, NUMBER_FLOATS, NUMBER_BOOLEANS, responseArray);
+
             } catch (Exception e) {
                 logger.error("", e);
             }

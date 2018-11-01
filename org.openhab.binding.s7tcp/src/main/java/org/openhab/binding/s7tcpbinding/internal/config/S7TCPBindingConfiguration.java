@@ -20,8 +20,8 @@ public class S7TCPBindingConfiguration {
     public static final String PORT = "port";
     public static final String REFRESH = "refresh";
 
-    public String host;
+    public String host = "10.100.0.1";
     public int port = 2012;
-    public int refresh = 5; // seconds
+    public int refresh = 2; // seconds
 
 }

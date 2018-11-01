@@ -42,8 +42,9 @@ public class S7TCPBindingHandlerFactory extends BaseThingHandlerFactory {
 
         if (thingTypeUID.equals(THING_TYPE_BRIDGE)) {
             return new S7TCPBindingHandler((Bridge) thing);
-        } else if (thingTypeUID.equals(THING_TYPE_TEMPERATURE) || thingTypeUID.equals(THING_TYPE_ROLLERSHUTTER)
-                || thingTypeUID.equals(THING_TYPE_THERMOSTAT) || thingTypeUID.equals(THING_TYPE_OUTLET)) {
+        } else if (thingTypeUID.equals(THING_TYPE_LIGHT) || thingTypeUID.equals(THING_TYPE_TEMPERATURE)
+                || thingTypeUID.equals(THING_TYPE_ROLLERSHUTTER) || thingTypeUID.equals(THING_TYPE_THERMOSTAT)
+                || thingTypeUID.equals(THING_TYPE_OUTLET)) {
             return new S7ThingHandler(thing);
         }
 

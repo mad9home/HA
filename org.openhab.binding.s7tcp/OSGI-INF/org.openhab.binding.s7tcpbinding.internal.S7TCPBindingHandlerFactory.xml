@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.openhab.binding.s7tcpbinding.internal.S7TCPBindingHandlerFactory" configuration-pid="binding.s7tcpbinding">
-    <service servicefactory="false">
+    <service>
         <provide interface="org.eclipse.smarthome.core.thing.binding.ThingHandlerFactory"/>
     </service>
     <implementation class="org.openhab.binding.s7tcpbinding.internal.S7TCPBindingHandlerFactory"/>

@@ -67,7 +67,10 @@ public class S7ThingHandler extends BaseThingHandler {
             } else {
                 int index = ((BigDecimal) getThing().getConfiguration().get("index")).intValue();
                 logger.debug("index:" + index);
-                switch (getThing().getChannel(channelUID.getId()).getChannelTypeUID().getId()) {
+                String channel = channelUID.getId();
+                // switch (getThing().getChannel(channelUID.getId()).getChannelTypeUID().getId()) {
+                switch (channel) {
+
                     case CHANNEL_SWITCH:
                         if (!(command instanceof RefreshType)) {
                             bridgeHandler.setBoolean(index, true);
